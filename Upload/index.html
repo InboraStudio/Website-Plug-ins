@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Inbora Studio - Uploading Data</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=DM+Sans&amp;display=swap'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<main>
+	<div class="upload">
+		<div class="upload__bubbles">
+			<div class="upload__cloud-explode">
+				<div class="upload__finish">
+					<svg role="img" aria-label="Checkmark in circle" class="upload__check" viewBox="0 0 128 128" width="128" height="128">
+						<g fill="none" stroke="hsl(223,90%,50%)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+							<circle class="upload__check-ring" r="62" cx="64" cy="64" stroke-dasharray="389.56 389.56" stroke-dashoffset="389.56" transform="rotate(-90,64,64)" />
+							<polyline class="upload__check-line" points="40,64 56,80 88,48" stroke-dasharray="68 68" stroke-dashoffset="68" />
+						</g>
+					</svg>
+					<p class="upload__feedback">File has been uploaded successfully!</p>
+					<button class="upload__button" type="button" data-reset>OK</button>
+				</div>
+			</div>
+			<div class="upload__cloud-left"></div>
+			<div class="upload__cloud-middle" data-circle></div>
+			<div class="upload__cloud-right"></div>
+		</div>
+		<div aria-hidden="false">
+			<div class="upload__progress" data-progress></div>
+			<button class="upload__button" type="button" data-upload>Upload</button>
+		</div>
+	</div>
+</main>
+<!-- partial -->
+  <script  src="./script.js"></script>
+
+</body>
+</html>
