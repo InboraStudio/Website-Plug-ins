@@ -1,0 +1,242 @@
+* {
+	border: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+:root {
+	--hue: 223;
+	--primary1: hsl(var(--hue),90%,5%);
+	--primary9: hsl(var(--hue),90%,40%);
+	--primary10: hsl(var(--hue),90%,50%);
+	--primary11: hsl(var(--hue),90%,60%);
+	--primary18: hsl(var(--hue),90%,90%);
+	--trans-dur: 0.3s;
+	font-size: calc(16px + (20 - 16) * (100vw - 320px) / (1280 - 320));
+}
+body,
+button {
+	font: 1em/1.5 "DM Sans", sans-serif;
+}
+body {
+	background-color: var(--primary18);
+	color: var(--primary1);
+	height: 100vh;
+	transition:
+		background-color var(--trans-dur),
+		color var(--trans-dur);
+}
+main {
+	display: grid;
+	overflow: hidden;
+	place-items: center;
+	height: 100%;
+	min-height: 24.5em;
+}
+.upload,
+.upload__finish {
+	max-width: 17em;
+}
+.upload {
+	padding: 1.5em;
+	text-align: center;
+	width: 100%;
+}
+.upload__button {
+	background-color: var(--primary10);
+	border-radius: 0.2em;
+	color: hsl(0,0%,100%);
+	padding: 0.75em 1.5em;
+	width: 100%;
+	transition: background-color 0.15s ease-in-out;
+}
+.upload__button:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+.upload__button:focus {
+	outline: transparent;
+}
+.upload__button:not(:disabled):focus-visible,
+.upload__button:not(:disabled):hover {
+	background-color: var(--primary9);
+}
+.upload__bubbles {
+	margin: 0 auto 3em auto;
+	position: relative;
+	height: 8em;
+	width: 8em;
+	z-index: 1;
+}
+.upload__bubble {
+	--dur: 3s; /* to be overridden by JavaScript */
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	width: 2em;
+	height: 2em;
+	transform: translateX(-50%);
+	transform-origin: 50% 100%;
+}
+.upload__bubble:before {
+	background-color: var(--primary11);
+	border-radius: 50%;
+	content: "";
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+.upload__check {
+	display: block;
+	margin: 0 auto 3em auto;
+	width: 8em;
+	height: 8em;
+}
+.upload__cloud-explode,
+.upload__cloud-left,
+.upload__cloud-middle,
+.upload__cloud-right {
+	background-color: hsl(0,0%,100%);
+	position: absolute;
+}
+.upload__cloud-explode,
+.upload__cloud-middle {
+	border-radius: 50%;
+}
+.upload__cloud-explode {
+	display: none;
+	bottom: 0;
+	left: 50%;
+	width: 69em;
+	height: 69em;
+	transform: translate(-50%,1em) scale(0);
+	transform-origin: 50% 100%;
+	z-index: 1;
+}
+.upload__cloud-left,
+.upload__cloud-middle,
+.upload__cloud-right {
+	bottom: 0;
+}
+.upload__cloud-left,
+.upload__cloud-right {
+	width: 6em;
+}
+.upload__cloud-left {
+	border-radius: 2.5em 0 0 2.5em;
+	right: 50%;
+	height: 5em;
+}
+.upload__cloud-middle {
+	overflow: hidden;
+	position: absolute;
+	left: 50%;
+	width: 13em;
+	height: 13em;
+	transform: translate(-50%,0) scale(0.6);
+	transform-origin: 50% 100%;
+	z-index: 2;
+}
+.upload__cloud-right {
+	border-radius: 0 3em 3em 0;
+	left: 50%;
+	height: 6em;
+}
+.upload__feedback {
+	color: hsl(var(--hue),10%,5%);
+	margin-bottom: 4.5em;
+}
+.upload__feedback,
+.upload__feedback + .upload__button {
+	opacity: 0;
+	transform: translateY(100%);
+}
+.upload__finish {
+	margin: auto;
+	padding: 1.5em;
+}
+.upload__progress {
+	opacity: 0;
+}
+.upload__progress {
+	font-size: 3em;
+	margin-bottom: 3rem;
+	min-height: 4.5rem;
+	transform: translateY(25%);
+}
+/* running state */
+.upload--running .upload__cloud-left,
+.upload--running .upload__cloud-middle,
+.upload--running .upload__cloud-right {
+	transition: all 0.5s ease-in-out;
+}
+.upload--running .upload__cloud-left {
+	transform: translateX(2.5em);
+}
+.upload--running .upload__cloud-middle {
+	transform: translate(-50%,1em) scale(1);
+}
+.upload--running .upload__cloud-right {
+	transform: translateX(-2.5em);
+}
+.upload--running .upload__bubble:before {
+	animation: rise var(--dur) linear forwards;
+}
+.upload--running .upload__progress {
+	opacity: 1;
+	transform: translateY(0);
+	transition: all 0.3s ease-in-out;
+}
+/* done state */
+.upload--done .upload__cloud-explode {
+	animation: expand 1s 0.5s ease-in-out forwards;
+	display: flex;
+}
+.upload--done .upload__cloud-middle {
+	animation: slideUp 1.5s 0.5s ease-in-out forwards;
+}
+.upload--done .upload__feedback,
+.upload--done .upload__feedback + .upload__button {
+	animation: fadeSlideUp 0.5s 1.25s ease-in-out forwards;
+}
+.upload--done .upload__feedback + .upload__button {
+	animation-delay: 1.4s;
+}
+.upload--done .upload__check-ring,
+.upload--done .upload__check-line {
+	animation: strokeIn 0.5s 1.25s ease-in-out forwards;
+}
+
+/* Animations */
+@keyframes expand {
+	from {
+		transform: translate(-50%,1em) scale(0.3333); /* 23/69 */
+	}
+	to {
+		transform: translate(-50%,37.25em) scale(1);
+	}
+}
+@keyframes fadeSlideUp {
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+@keyframes rise {
+	to {
+		transform: translateY(-25em);
+	}
+}
+@keyframes strokeIn {
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+@keyframes slideUp {
+	from {
+		transform: translate(-50%,1em);
+	}
+	to {
+		transform: translate(-50%,-23em);
+	}
+}
